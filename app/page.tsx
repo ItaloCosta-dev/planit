@@ -1,9 +1,11 @@
-import React from "react";
+// Landing Page
+
+import Header from "./Landing_page/components/header";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Olá PLanit - primeiro commit</h1>
+    <div className="flex justify-center">
+      <Header />
     </div>
   );
 };
