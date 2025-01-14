@@ -14,7 +14,7 @@ import {
 
 const Features = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-5 mt-10">
+    <div className="flex flex-col justify-center items-center gap-5 mt-10 p-5">
       <h1 className="font-bold text-2xl text-teal-800">
         Como o Planit te ajuda?
       </h1>
