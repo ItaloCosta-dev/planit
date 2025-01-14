@@ -1,5 +1,6 @@
 // Landing Page
 
+import DesktopAndMobile from "./Landing_page/components/desktopAndMobile";
 import DevComment from "./Landing_page/components/devComment";
 import Features from "./Landing_page/components/features";
 import Header from "./Landing_page/components/header";
@@ -12,6 +13,7 @@ const Home = () => {
       <Macbook />
       <Features />
       <DevComment />
+      <DesktopAndMobile />
     </>
   );
 };

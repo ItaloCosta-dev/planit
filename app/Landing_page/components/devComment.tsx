@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const DevComment = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-5 mt-10 p-5">
+    <div className="flex flex-col justify-center items-center gap-5 mt-10 p-5 bg-slate-100">
       <h1 className="text-center text-2xl font-bold p-1">
         Criei este aplicativo para ajudar você a organizar suas tarefas e
         alcançar seus objetivos com mais eficiência. Você pode planejar seu dia,
