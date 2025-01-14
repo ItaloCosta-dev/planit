@@ -5,6 +5,13 @@ import { CiCircleCheck } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
 import { FaMobileAlt } from "react-icons/fa";
 
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 const Features = () => {
   return (
     <div className="flex flex-col justify-center items-center gap-5 mt-10">
@@ -18,56 +25,62 @@ const Features = () => {
         um prazo ou uma ideia importante.
       </p>
 
-      <div className="flex flex-col justify-center items-center gap-10">
-        <div className="flex flex-col ustify-center items-center">
-          <CiCirclePlus size={35} />
-          <h1 className="font-bold text-teal-800">Crie sua tarefa</h1>
-          <p className="text-center">
-            Adicione sua tarefa rapidamente com um título de sua preferência.
-          </p>
+      <div className="flex flex-col gap-10">
+        <div className="flex flex-row gap-5">
+          <Card className="flex flex-col justify-center items-center text-center p-10">
+            <CardHeader>
+              <CardTitle>Crie sua tarefa</CardTitle>
+              <CardDescription className="flex justify-center">
+                <CiCirclePlus size={35} />
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card className="flex flex-col justify-center items-center text-center p-10">
+            <CardHeader>
+              <CardTitle>Edite sua tarefa</CardTitle>
+              <CardDescription className="flex justify-center">
+                <FaPencilAlt size={35} />
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card className="flex flex-col justify-center items-center text-center p-10">
+            <CardHeader>
+              <CardTitle>Listar tarefas</CardTitle>
+              <CardDescription className="flex justify-center">
+                <CiViewList size={35} />
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
 
-        <div className="flex flex-col ustify-center items-center">
-          <FaPencilAlt size={35} />
-          <h1 className="font-bold text-teal-800">Edite a sua tarefa</h1>
-          <p className="text-center">
-            Não gostou do nome? Sem problemas, edite de forma fácil.
-          </p>
-        </div>
+        <div className="flex flex-row gap-5">
+        <Card className="flex flex-col justify-center items-center text-center p-10">
+            <CardHeader>
+              <CardTitle>Tarefas concluídas</CardTitle>
+              <CardDescription className="flex justify-center">
+                <CiCircleCheck size={35} />
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          <Card className="flex flex-col justify-center items-center text-center p-10">
+            <CardHeader>
+              <CardTitle>Deletar tarefas</CardTitle>
+              <CardDescription className="flex justify-center">
+                <CiTrash size={35} />
+              </CardDescription>
+            </CardHeader>
+          </Card>
 
-        <div className="flex flex-col ustify-center items-center">
-          <CiTrash size={35} />
-          <h1 className="font-bold text-teal-800">Delete a qualquer momento</h1>
-          <p className="text-center">
-            Caso sua tarefa não seja mais prioridade, apague com apenas um
-            clique.
-          </p>
-        </div>
-
-        <div className="flex flex-col ustify-center items-center">
-          <CiCircleCheck size={35} />
-          <h1 className="font-bold text-teal-800">Tarefas concluídas</h1>
-          <p className="text-center">
-            Veja em tempo real todas as tarefas que você já concluiu.
-          </p>
-        </div>
-
-        <div className="flex flex-col ustify-center items-center">
-          <CiViewList size={35} />
-          <h1 className="font-bold text-teal-800">
-            Veja todas as suas tarefas
-          </h1>
-          <p className="text-center">
-            Visualize todas as tarefas em uma lista organizada.
-          </p>
-        </div>
-
-        <div className="flex flex-col ustify-center items-center">
-          <FaMobileAlt size={35} />
-          <h1 className="font-bold text-teal-800">Design responsivo</h1>
-          <p className="text-center">
-            Acesse sua lista de tarefas no celular, tablet ou desktop.
-          </p>
+          <Card className="flex flex-col justify-center items-center text-center p-10">
+            <CardHeader>
+              <CardTitle>Use no celular</CardTitle>
+              <CardDescription className="flex justify-center">
+                <FaMobileAlt size={35} />
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
       </div>
     </div>
