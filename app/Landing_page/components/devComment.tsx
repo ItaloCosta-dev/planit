@@ -1,7 +1,16 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const DevComment = () => {
+  const router = useRouter();
+
+  const handleNavigation = () => {
+    router.push("/social-login");
+  };
+
   return (
     <div className="flex flex-col justify-center items-center gap-5 mt-10 p-5 bg-slate-100">
       <h1 className="text-center text-2xl font-bold p-1">
@@ -19,7 +28,10 @@ const DevComment = () => {
       />
 
       <p>Italo Costa - Criador do Planit</p>
-      <Button className="bg-teal-800 hover:bg-teal-400 hover:text-black text-white font-semibold p-7">
+      <Button
+        className="bg-teal-800 hover:bg-teal-400 hover:text-black text-white font-semibold p-7"
+        onClick={handleNavigation}
+      >
         Usar Grátis
       </Button>
     </div>
