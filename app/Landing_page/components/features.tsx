@@ -15,10 +15,8 @@ import {
 const Features = () => {
   return (
     <div className="flex flex-col justify-center items-center gap-5 mt-10 p-5">
-      <h1 className="font-bold text-2xl text-teal-800">
-        Como o Planit te ajuda?
-      </h1>
-      <p className="text-lg text-teal-800 text-center">
+      <h1 className="font-bold text-2xl">Como o Planit te ajuda?</h1>
+      <p className="text-lg  text-center">
         Transforme sua rotina e alcance o máximo do seu potencial. Com nosso
         aplicativo de lista de tarefas, planeje, organize e acompanhe cada passo
         do seu dia de forma simples e eficiente, garantindo que você nunca perca
@@ -26,7 +24,7 @@ const Features = () => {
       </p>
 
       <div className="flex flex-col gap-10">
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-col md:flex-row gap-5">
           <Card className="flex flex-col justify-center items-center text-center p-10">
             <CardHeader>
               <CardTitle>Crie sua tarefa</CardTitle>
@@ -55,8 +53,8 @@ const Features = () => {
           </Card>
         </div>
 
-        <div className="flex flex-row gap-5">
-        <Card className="flex flex-col justify-center items-center text-center p-10">
+        <div className="flex flex-col md:flex-row gap-5">
+          <Card className="flex flex-col justify-center items-center text-center p-10">
             <CardHeader>
               <CardTitle>Tarefas concluídas</CardTitle>
               <CardDescription className="flex justify-center">
