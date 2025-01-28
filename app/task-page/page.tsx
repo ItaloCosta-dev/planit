@@ -18,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Aplication from "@/components/app-components/aplication";
 
 const TaskPage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -96,7 +97,7 @@ const TaskPage = () => {
           </div>
         </div>
       </header>
-      <h1>CALMA PAIZÃO, TÔ CONSTRUINDO</h1>
+     <Aplication />
     </div>
   );
 };
