@@ -6,6 +6,7 @@ import { GoPencil } from "react-icons/go";
 const Aplication = () => {
   const [task, setTask] = useState(""); // Armazena o valor da tarefa nova.
   const [createdTask, setCreatedTask] = useState<string[]>([]); // Lista de tarefas criadas.
+  const [completedTasks, setCompletedTasks] = useState<string[]>([]); // Lista de tarefas concluídas.
   const [editingIndex, setEditingIndex] = useState<number | null>(null); // Índice da tarefa sendo editada.
   const [editText, setEditText] = useState(""); // Texto da edição atual.
 
@@ -30,10 +31,16 @@ const Aplication = () => {
     }
   };
 
-const handleDeleteTask = (index: number) => {
-  const updatedTasks = createdTask.filter((_,i) => i !== index)
-  setCreatedTask(updatedTasks)
-}
+  const handleDeleteTask = (index: number) => {
+    const updatedTasks = createdTask.filter((_, i) => i !== index);
+    setCreatedTask(updatedTasks);
+  };
+
+  const handleCompleteTask = (index: number) => {
+    const taskToComplete = createdTask[index]; // Obtém a tarefa selecionada
+    setCompletedTasks([...completedTasks, taskToComplete]); // Move para a lista de concluídas
+    handleDeleteTask(index); // Remove da lista ativa
+  };
 
   return (
     <div className="flex justify-center items-center h-screen px-4">
@@ -78,13 +85,21 @@ const handleDeleteTask = (index: number) => {
                 )}
 
                 <div className="flex flex-row gap-2">
-                  <CiSquareCheck size={23} className="cursor-pointer text-green-700" />
+                  <CiSquareCheck
+                    size={23}
+                    className="cursor-pointer text-green-700"
+                    onClick={() => handleCompleteTask(index)}
+                  />
                   <GoPencil
                     size={23}
                     className="cursor-pointer text-blue-500"
                     onClick={() => handleEditClick(index)}
                   />
-                  <CiTrash size={23} className="cursor-pointer text-red-500" onClick={() => handleDeleteTask(index)}/>
+                  <CiTrash
+                    size={23}
+                    className="cursor-pointer text-red-500"
+                    onClick={() => handleDeleteTask(index)}
+                  />
                 </div>
               </div>
             ))}
@@ -94,8 +109,20 @@ const handleDeleteTask = (index: number) => {
         {/* Tarefas concluídas */}
         <div>
           <p className="font-semibold text-lg mb-2">Tarefas concluídas</p>
-          <div className="bg-gray-200 p-3 rounded-md text-green-600 line-through">
-            Tarefa concluída
+          <div className="flex flex-col gap-2">
+            {completedTasks.map((task, index) => (
+              <div
+                key={index}
+                className="bg-gray-200 p-3 rounded-md text-green-600 line-through flex justify-between flex-row items-center"
+              >
+                 {task}
+                 <CiTrash
+                    size={23}
+                    className="cursor-pointer text-red-500"
+                  />
+               
+              </div>
+            ))}
           </div>
         </div>
       </div>
