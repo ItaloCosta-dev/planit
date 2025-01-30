@@ -1,19 +1,32 @@
 import React, { useState } from "react";
 import { Input } from "../ui/input";
-import { CiSquarePlus } from "react-icons/ci";
-import { CiSquareCheck } from "react-icons/ci";
+import { CiSquarePlus, CiSquareCheck, CiTrash } from "react-icons/ci";
 import { GoPencil } from "react-icons/go";
-import { CiTrash } from "react-icons/ci";
 
 const Aplication = () => {
-  const [task, setTask] = useState(""); // armazenar o valor das tarefas.
-  const [createdTask, setCreatedTask] = useState<string[]>([]); // armezenar as tarefas criadas.
+  const [task, setTask] = useState(""); // Armazena o valor da tarefa nova.
+  const [createdTask, setCreatedTask] = useState<string[]>([]); // Lista de tarefas criadas.
+  const [editingIndex, setEditingIndex] = useState<number | null>(null); // Índice da tarefa sendo editada.
+  const [editText, setEditText] = useState(""); // Texto da edição atual.
 
   const handleAddTask = () => {
-    if (task !== "") {
-      // Verifica se a tarefa não é uma string vazia
-      setCreatedTask([...createdTask, task]); // Adiciona a nova tarefa
-      setTask(""); // Limpa o input após adicionar a tarefa
+    if (task.trim() !== "") {
+      setCreatedTask([...createdTask, task]); // Adiciona a nova tarefa.
+      setTask(""); // Limpa o input.
+    }
+  };
+
+  const handleEditClick = (index: number) => {
+    setEditingIndex(index); // Define o índice da tarefa sendo editada.
+    setEditText(createdTask[index]); // Preenche o input com o valor atual da tarefa.
+  };
+
+  const handleEditTask = (index: number) => {
+    if (editText.trim() !== "") {
+      const updatedTask = [...createdTask]; // Faz uma cópia do array
+      updatedTask[index] = editText; // Atualiza a tarefa editada
+      setCreatedTask(updatedTask); // Atualiza o estado
+      setEditingIndex(null); // Sai do modo de edição
     }
   };
 
@@ -26,7 +39,7 @@ const Aplication = () => {
             placeholder="Digite uma tarefa"
             className="flex-1 p-2 border border-gray-300 rounded-md"
             value={task}
-            onChange={(e) => setTask(e.target.value)} // atualiza o valor do input
+            onChange={(e) => setTask(e.target.value)}
           />
           <CiSquarePlus
             size={50}
@@ -44,11 +57,29 @@ const Aplication = () => {
                 className="bg-gray-200 p-3 rounded-sm flex flex-row justify-between items-center"
                 key={index}
               >
-                {task}
+                {editingIndex === index ? (
+                  <input
+                    className="p-1 border border-gray-400 rounded-sm flex-1"
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                    onBlur={() => handleEditTask(index)} // Salva ao perder o foco
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleEditTask(index);
+                    }} // Salva ao pressionar Enter
+                    autoFocus
+                  />
+                ) : (
+                  <span>{task}</span>
+                )}
+
                 <div className="flex flex-row gap-2">
-                  <CiSquareCheck  size={23} className="cursor-pointer text-green-700"/>
-                  <GoPencil  size={23} className="cursor-pointer text-blue-500"/>
-                  <CiTrash  size={23} className="cursor-pointer text-red-500"/>
+                  <CiSquareCheck size={23} className="cursor-pointer text-green-700" />
+                  <GoPencil
+                    size={23}
+                    className="cursor-pointer text-blue-500"
+                    onClick={() => handleEditClick(index)}
+                  />
+                  <CiTrash size={23} className="cursor-pointer text-red-500" />
                 </div>
               </div>
             ))}
