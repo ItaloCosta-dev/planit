@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { CiSquarePlus, CiSquareCheck, CiTrash } from "react-icons/ci";
 import { GoPencil } from "react-icons/go";
@@ -10,42 +10,89 @@ const Aplication = () => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null); // Índice da tarefa sendo editada.
   const [editText, setEditText] = useState(""); // Texto da edição atual.
 
+  // Função para salvar as tarefas no localStorage
+  const saveToLocalStorage = (tasks: string[], completed: string[]) => {
+    localStorage.setItem("createdTasks", JSON.stringify(tasks));
+    localStorage.setItem("completedTasks", JSON.stringify(completed));
+  };
+
+  // Carregar tarefas do localStorage ao iniciar
+  useEffect(() => {
+    try {
+      const storedCreatedTasks = localStorage.getItem("createdTasks");
+      const storedCompletedTasks = localStorage.getItem("completedTasks");
+
+      if (storedCreatedTasks) {
+        setCreatedTask(JSON.parse(storedCreatedTasks));
+      }
+      if (storedCompletedTasks) {
+        setCompletedTasks(JSON.parse(storedCompletedTasks));
+      }
+    } catch (error) {
+      console.error("Erro ao carregar tarefas do localStorage:", error);
+    }
+  }, []);
+
+  // Atualizar o localStorage sempre que as tarefas forem alteradas
+  useEffect(() => {
+    saveToLocalStorage(createdTask, completedTasks);
+  }, [createdTask, completedTasks]);
+
   const handleAddTask = () => {
     if (task.trim() !== "") {
-      setCreatedTask([...createdTask, task]); // Adiciona a nova tarefa.
-      setTask(""); // Limpa o input.
+      setCreatedTask((prevTasks) => {
+        const updatedTasks = [...prevTasks, task];
+        saveToLocalStorage(updatedTasks, completedTasks);
+        return updatedTasks;
+      });
+      setTask("");
     }
   };
 
   const handleEditClick = (index: number) => {
-    setEditingIndex(index); // Define o índice da tarefa sendo editada.
-    setEditText(createdTask[index]); // Preenche o input com o valor atual da tarefa.
+    setEditingIndex(index);
+    setEditText(createdTask[index]);
   };
 
   const handleEditTask = (index: number) => {
     if (editText.trim() !== "") {
-      const updatedTask = [...createdTask]; // Faz uma cópia do array
-      updatedTask[index] = editText; // Atualiza a tarefa editada
-      setCreatedTask(updatedTask); // Atualiza o estado
-      setEditingIndex(null); // Sai do modo de edição
+      setCreatedTask((prevTasks) => {
+        const updatedTasks = [...prevTasks];
+        updatedTasks[index] = editText;
+        saveToLocalStorage(updatedTasks, completedTasks);
+        return updatedTasks;
+      });
     }
+    setEditingIndex(null);
   };
 
   const handleDeleteTask = (index: number) => {
-    const updatedTasks = createdTask.filter((_, i) => i !== index);
-    setCreatedTask(updatedTasks);
+    setCreatedTask((prevTasks) => {
+      const updatedTasks = prevTasks.filter((_, i) => i !== index);
+      saveToLocalStorage(updatedTasks, completedTasks);
+      return updatedTasks;
+    });
   };
 
   const handleCompleteTask = (index: number) => {
-    const taskToComplete = createdTask[index]; // Obtém a tarefa selecionada
-    setCompletedTasks([...completedTasks, taskToComplete]); // Move para a lista de concluídas
-    handleDeleteTask(index); // Remove da lista ativa
+    const taskToComplete = createdTask[index]; // Pega a tarefa a ser concluída
+    const updatedCreatedTasks = createdTask.filter((_, i) => i !== index); // Remove da lista de tarefas criadas
+    const updatedCompletedTasks = [...completedTasks, taskToComplete]; // Adiciona a tarefa na lista de concluídas
+  
+    // Atualiza ambos os estados e salva no localStorage
+    setCreatedTask(updatedCreatedTasks);
+    setCompletedTasks(updatedCompletedTasks);
+    saveToLocalStorage(updatedCreatedTasks, updatedCompletedTasks);
   };
+  
 
   const handleDeleteCompleteTask = (index: number) => {
-    const updatedCompletedTasks = completedTasks.filter((_,i) => i !== index)
-    setCompletedTasks(updatedCompletedTasks)
-  }
+    setCompletedTasks((prevCompleted) => {
+      const updatedCompletedTasks = prevCompleted.filter((_, i) => i !== index);
+      saveToLocalStorage(createdTask, updatedCompletedTasks);
+      return updatedCompletedTasks;
+    });
+  };
 
   return (
     <div className="flex justify-center items-center h-screen px-4">
@@ -79,10 +126,10 @@ const Aplication = () => {
                     className="p-1 border border-gray-400 rounded-sm flex-1"
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
-                    onBlur={() => handleEditTask(index)} // Salva ao perder o foco
+                    onBlur={() => handleEditTask(index)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") handleEditTask(index);
-                    }} // Salva ao pressionar Enter
+                    }}
                     autoFocus
                   />
                 ) : (
@@ -120,13 +167,12 @@ const Aplication = () => {
                 key={index}
                 className="bg-gray-200 p-3 rounded-md text-green-600 line-through flex justify-between flex-row items-center"
               >
-                 {task}
-                 <CiTrash
-                    size={23}
-                    className="cursor-pointer text-red-500"
-                    onClick={() => handleDeleteCompleteTask(index)}
-                  />
-               
+                {task}
+                <CiTrash
+                  size={23}
+                  className="cursor-pointer text-red-500"
+                  onClick={() => handleDeleteCompleteTask(index)}
+                />
               </div>
             ))}
           </div>
