@@ -30,6 +30,11 @@ const Aplication = () => {
     }
   };
 
+const handleDeleteTask = (index: number) => {
+  const updatedTasks = createdTask.filter((_,i) => i !== index)
+  setCreatedTask(updatedTasks)
+}
+
   return (
     <div className="flex justify-center items-center h-screen px-4">
       <div className="w-full max-w-md flex flex-col p-4 bg-white shadow-sm rounded-lg">
@@ -79,7 +84,7 @@ const Aplication = () => {
                     className="cursor-pointer text-blue-500"
                     onClick={() => handleEditClick(index)}
                   />
-                  <CiTrash size={23} className="cursor-pointer text-red-500" />
+                  <CiTrash size={23} className="cursor-pointer text-red-500" onClick={() => handleDeleteTask(index)}/>
                 </div>
               </div>
             ))}
