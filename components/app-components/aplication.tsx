@@ -42,6 +42,11 @@ const Aplication = () => {
     handleDeleteTask(index); // Remove da lista ativa
   };
 
+  const handleDeleteCompleteTask = (index: number) => {
+    const updatedCompletedTasks = completedTasks.filter((_,i) => i !== index)
+    setCompletedTasks(updatedCompletedTasks)
+  }
+
   return (
     <div className="flex justify-center items-center h-screen px-4">
       <div className="w-full max-w-md flex flex-col p-4 bg-white shadow-sm rounded-lg">
@@ -119,6 +124,7 @@ const Aplication = () => {
                  <CiTrash
                     size={23}
                     className="cursor-pointer text-red-500"
+                    onClick={() => handleDeleteCompleteTask(index)}
                   />
                
               </div>
