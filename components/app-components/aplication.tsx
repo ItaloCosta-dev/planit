@@ -94,7 +94,7 @@ const Aplication = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            [Botão temporário] Deixe aqui o seu feedback
+            [temporário] Deixe aqui o seu feedback
           </a>
         </Button>
 
