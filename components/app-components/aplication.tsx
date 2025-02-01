@@ -62,10 +62,14 @@ const Aplication = () => {
   };
 
   const handleCompleteTask = (index: number) => {
-    setCreatedTask((prevTasks) => {
-      const updatedTasks = prevTasks.filter((_, i) => i !== index);
-      setCompletedTasks((prevCompleted) => [...prevCompleted, prevTasks[index]]);
-      return updatedTasks;
+    const taskToComplete = createdTask[index];
+
+    setCreatedTask((prevTasks) => prevTasks.filter((_, i) => i !== index));
+    setCompletedTasks((prevCompleted) => {
+      if (!prevCompleted.includes(taskToComplete)) {
+        return [...prevCompleted, taskToComplete];
+      }
+      return prevCompleted;
     });
   };
 
