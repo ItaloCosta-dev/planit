@@ -4,47 +4,43 @@ import { CiSquarePlus, CiSquareCheck, CiTrash } from "react-icons/ci";
 import { GoPencil } from "react-icons/go";
 
 const Aplication = () => {
-  const [task, setTask] = useState(""); // Armazena o valor da tarefa nova.
-  const [createdTask, setCreatedTask] = useState<string[]>([]); // Lista de tarefas criadas.
-  const [completedTasks, setCompletedTasks] = useState<string[]>([]); // Lista de tarefas concluídas.
-  const [editingIndex, setEditingIndex] = useState<number | null>(null); // Índice da tarefa sendo editada.
-  const [editText, setEditText] = useState(""); // Texto da edição atual.
+  const [task, setTask] = useState(""); 
+  const [createdTask, setCreatedTask] = useState<string[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<string[]>([]);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editText, setEditText] = useState("");
 
   // Função para salvar as tarefas no localStorage
-  const saveToLocalStorage = (tasks: string[], completed: string[]) => {
-    localStorage.setItem("createdTasks", JSON.stringify(tasks));
-    localStorage.setItem("completedTasks", JSON.stringify(completed));
+  const saveToLocalStorage = () => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("createdTasks", JSON.stringify(createdTask));
+      localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+    }
   };
 
   // Carregar tarefas do localStorage ao iniciar
   useEffect(() => {
-    try {
-      const storedCreatedTasks = localStorage.getItem("createdTasks");
-      const storedCompletedTasks = localStorage.getItem("completedTasks");
+    if (typeof window !== "undefined") {
+      try {
+        const storedCreatedTasks = JSON.parse(localStorage.getItem("createdTasks") || "[]");
+        const storedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks") || "[]");
 
-      if (storedCreatedTasks) {
-        setCreatedTask(JSON.parse(storedCreatedTasks));
+        setCreatedTask(storedCreatedTasks);
+        setCompletedTasks(storedCompletedTasks);
+      } catch (error) {
+        console.error("Erro ao carregar tarefas do localStorage:", error);
       }
-      if (storedCompletedTasks) {
-        setCompletedTasks(JSON.parse(storedCompletedTasks));
-      }
-    } catch (error) {
-      console.error("Erro ao carregar tarefas do localStorage:", error);
     }
   }, []);
 
   // Atualizar o localStorage sempre que as tarefas forem alteradas
   useEffect(() => {
-    saveToLocalStorage(createdTask, completedTasks);
+    saveToLocalStorage();
   }, [createdTask, completedTasks]);
 
   const handleAddTask = () => {
     if (task.trim() !== "") {
-      setCreatedTask((prevTasks) => {
-        const updatedTasks = [...prevTasks, task];
-        saveToLocalStorage(updatedTasks, completedTasks);
-        return updatedTasks;
-      });
+      setCreatedTask((prevTasks) => [...prevTasks, task]);
       setTask("");
     }
   };
@@ -59,7 +55,6 @@ const Aplication = () => {
       setCreatedTask((prevTasks) => {
         const updatedTasks = [...prevTasks];
         updatedTasks[index] = editText;
-        saveToLocalStorage(updatedTasks, completedTasks);
         return updatedTasks;
       });
     }
@@ -67,31 +62,19 @@ const Aplication = () => {
   };
 
   const handleDeleteTask = (index: number) => {
+    setCreatedTask((prevTasks) => prevTasks.filter((_, i) => i !== index));
+  };
+
+  const handleCompleteTask = (index: number) => {
     setCreatedTask((prevTasks) => {
       const updatedTasks = prevTasks.filter((_, i) => i !== index);
-      saveToLocalStorage(updatedTasks, completedTasks);
+      setCompletedTasks((prevCompleted) => [...prevCompleted, prevTasks[index]]);
       return updatedTasks;
     });
   };
 
-  const handleCompleteTask = (index: number) => {
-    const taskToComplete = createdTask[index]; // Pega a tarefa a ser concluída
-    const updatedCreatedTasks = createdTask.filter((_, i) => i !== index); // Remove da lista de tarefas criadas
-    const updatedCompletedTasks = [...completedTasks, taskToComplete]; // Adiciona a tarefa na lista de concluídas
-  
-    // Atualiza ambos os estados e salva no localStorage
-    setCreatedTask(updatedCreatedTasks);
-    setCompletedTasks(updatedCompletedTasks);
-    saveToLocalStorage(updatedCreatedTasks, updatedCompletedTasks);
-  };
-  
-
   const handleDeleteCompleteTask = (index: number) => {
-    setCompletedTasks((prevCompleted) => {
-      const updatedCompletedTasks = prevCompleted.filter((_, i) => i !== index);
-      saveToLocalStorage(createdTask, updatedCompletedTasks);
-      return updatedCompletedTasks;
-    });
+    setCompletedTasks((prevCompleted) => prevCompleted.filter((_, i) => i !== index));
   };
 
   return (
