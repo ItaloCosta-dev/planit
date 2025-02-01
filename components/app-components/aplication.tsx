@@ -10,14 +10,6 @@ const Aplication = () => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editText, setEditText] = useState("");
 
-  // Função para salvar as tarefas no localStorage
-  const saveToLocalStorage = () => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("createdTasks", JSON.stringify(createdTask));
-      localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
-    }
-  };
-
   // Carregar tarefas do localStorage ao iniciar
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -25,8 +17,8 @@ const Aplication = () => {
         const storedCreatedTasks = JSON.parse(localStorage.getItem("createdTasks") || "[]");
         const storedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks") || "[]");
 
-        setCreatedTask(storedCreatedTasks);
-        setCompletedTasks(storedCompletedTasks);
+        if (storedCreatedTasks.length > 0) setCreatedTask(storedCreatedTasks);
+        if (storedCompletedTasks.length > 0) setCompletedTasks(storedCompletedTasks);
       } catch (error) {
         console.error("Erro ao carregar tarefas do localStorage:", error);
       }
@@ -35,12 +27,16 @@ const Aplication = () => {
 
   // Atualizar o localStorage sempre que as tarefas forem alteradas
   useEffect(() => {
-    saveToLocalStorage();
+    if (createdTask.length > 0 || completedTasks.length > 0) {
+      localStorage.setItem("createdTasks", JSON.stringify(createdTask));
+      localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+    }
   }, [createdTask, completedTasks]);
 
   const handleAddTask = () => {
     if (task.trim() !== "") {
-      setCreatedTask((prevTasks) => [...prevTasks, task]);
+      const newTasks = [...createdTask, task];
+      setCreatedTask(newTasks);
       setTask("");
     }
   };
