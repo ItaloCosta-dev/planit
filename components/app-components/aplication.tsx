@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { CiSquarePlus, CiSquareCheck, CiTrash } from "react-icons/ci";
 import { GoPencil } from "react-icons/go";
-import { Button } from "../ui/button";
+
 
 const Aplication = () => {
   const [task, setTask] = useState("");
@@ -88,16 +88,6 @@ const Aplication = () => {
   return (
     <div className="flex justify-center items-center h-screen px-4">
       <div className="w-full max-w-md flex flex-col p-4 bg-white shadow-sm rounded-lg">
-        <Button asChild className="bg-red-500">
-          <a
-            href="https://forms.gle/UiSVQo9JwmjRfBA96"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            [temporário] Deixe aqui o seu feedback
-          </a>
-        </Button>
-
         {/* INPUT E BOTÃO */}
         <div className="flex flex-row items-center gap-2">
           <Input
