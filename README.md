@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Projeto - Planit - To-do List
+Este projeto consiste em uma lista de tarefas. Foi feito para treinar as operações básicas de um CRUD: Criar, ler, editar e deletar.
 
-## Getting Started
+## Como Funciona
+1. O usuário acessa a landing page.
+2. Faz o login social usando sua conta no Google.
+3. Gerencia suas tarefas.
 
-First, run the development server:
+## Funcionalidades Principais
+- **Criar tarefas**
+- **Editar tarefas**
+- **Marcar tarefas como concluídas**
+- **Deletar as tarefas criadas e tarefas concluídas**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologias Utilizadas
+- **Next.js**: Framework React para otimização de desempenho e funcionalidades avançadas como renderização do lado servidor.
+- **TypeScript**: Linguagem para garantir a tipagem estática e evitar erros durante o desenvolvimento.
+- **Tailwind CSS**: Framework CSS utilitário para estilização da interface, oferecendo um design responsivo e moderno.
+- **Shadcn/UI**: Biblioteca para criação de interfaces.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Sobre o Desenvolvedor
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Nome**: Italo Costa - Desenvolvedor React Júnior
+- [Meu LinkedIn](https://www.linkedin.com/in/italo-costa-dev/)
+- [Deploy do Projeto](https://planit-khaki.vercel.app/)
